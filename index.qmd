@@ -1,5 +1,6 @@
 ---
-title: "My Blog"
+title: "Blog"
+subtitle: "posts about research and business market analysis"
 listing:
   contents: posts
   sort: "date desc"

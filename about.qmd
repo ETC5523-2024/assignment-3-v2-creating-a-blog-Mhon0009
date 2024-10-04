@@ -10,6 +10,8 @@ about:
     - icon: linkedin
       text: LinkedIn
       href: https://www.linkedin.com/in/min-ni-hong-b0368121b/
+    - icon: envelope
+      text: mhon0009@student.monash.edu
 ---
 
 I am currently a Master of [Business Analytics](https://www.monash.edu/study/courses/find-a-course/business-analytics-b6022) student at Monash University. I'm dedicated to understanding and analyzing business market trends, with a keen interest in environmental data and their implications on sustainability and business decisions.
@@ -23,6 +25,7 @@ I am currently a Master of [Business Analytics](https://www.monash.edu/study/cou
 - Data visualization,
 - Predictive modeling in business contexts,
 - Understanding the impact of economic trends on consumer choices
+
 
 </div>
 I am an advocate for the responsible use of data and believe in maintaining transparency while ensuring privacy in analytics. My active GitHub profile contains various business analytics reports that I share publicly.

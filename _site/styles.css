@@ -16,20 +16,19 @@ h2 {
     color: #d63384;
 }
 
-h3, h4 {
+h5, h6 {
     color: 	#db7093;
 }
 
+
+h3,h4 {
+    color: #f08080;
+}
 
 .left-align {
     text-align: left;
     margin-left: 2;
 }
-
-h5, h6 {
-    color: #f08080;
-}
-
 
 body {
     background-color: #fffafa;
