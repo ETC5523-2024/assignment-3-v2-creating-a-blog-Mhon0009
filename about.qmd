@@ -1,13 +1,35 @@
 ---
-title: "About"
-image: profile.jpg
+title: "Min Ni Hong"  
+image: profilepicture.jpg
 about:
   template: jolla
   links:
     - icon: github
       text: Github
-      href: https://github.com/etc5523-2022
-
+      href: https://github.com/ETC5523-2024/assignment-3-v2-creating-a-blog-Mhon0009
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/min-ni-hong-b0368121b/
 ---
 
-This is a blog template for the ETC5523 Communicating with Data assessment at Monash University.
+I am currently a Master of [Business Analytics](https://www.monash.edu/study/courses/find-a-course/business-analytics-b6022) student at Monash University. I'm dedicated to understanding and analyzing business market trends, with a keen interest in environmental data and their implications on sustainability and business decisions.
+
+<div class="left-align">
+
+##### **My research interests include:**
+
+- Business market trend analysis,
+- Environmental data analytics,
+- Data visualization,
+- Predictive modeling in business contexts,
+- Understanding the impact of economic trends on consumer choices
+
+</div>
+I am an advocate for the responsible use of data and believe in maintaining transparency while ensuring privacy in analytics. My active GitHub profile contains various business analytics reports that I share publicly.
+
+I enjoy working on business analytics assignments in this course, which align with my passion. I am keen to exploring more about how analytics works in the real world.
+
+
+
+
+

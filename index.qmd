@@ -1,12 +1,12 @@
 ---
-title: "ETC5523 Blog Assessment"
+title: "My Blog"
 listing:
   contents: posts
   sort: "date desc"
-  type: default
+  type: default 
   categories: true
-  sort-ui: false
-  filter-ui: false
+  sort-ui: [title, date]
+  filter-ui: [title, date]
 page-layout: full
 title-block-banner: true
 ---

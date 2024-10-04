@@ -1,4 +1,42 @@
 /* css styles */
 .navbar-dark, .quarto-title-banner {
-  background-color: #006DAE;
+  background-color: #2c3e50;
 }
+
+.navbar {
+    background-color: #2c3e50;
+}
+
+/* Heading Colors */
+h1 {
+    color: #c71585;
+}
+
+h2 {
+    color: #d63384;
+}
+
+h3, h4 {
+    color: 	#db7093;
+}
+
+
+.left-align {
+    text-align: left;
+    margin-left: 2;
+}
+
+h5, h6 {
+    color: #f08080;
+}
+
+
+body {
+    background-color: #fffafa;
+}
+
+figcaption {
+  margin: auto;
+  text-align: center;
+}
+

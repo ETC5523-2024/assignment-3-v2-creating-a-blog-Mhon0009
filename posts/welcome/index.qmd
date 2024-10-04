@@ -1,12 +1,191 @@
 ---
-title: "Welcome To My Blog Template"
-author: "Emi Tanaka"
-date: "2022-07-18"
-categories: [news]
+title: "Valentine’s Day Consumer Spending Trends"
+author: "Min Ni Hong"
+date: "2024-10-03"
+categories: [news, analysis]
 ---
+```{r}
+#| echo: FALSE
+# Set up chunk 
+knitr::opts_chunk$set(
+  fig.width = 8, 
+  fig.height = 4,
+  fig.pos='H',
+  out.width = "100%",
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  cache = FALSE
+)
+```
+![](valentine.png)
 
-This is the first post in a Quarto blog. Welcome!
+# Valentine's Day: A Love Story for Consumers and Retailers Alike
 
-![](thumbnail.jpg)
+As Valentine’s Day approaches, many of us start thinking about how to show our love and appreciation for our partners, friends, and family. However, Valentine’s Day is more than just a day of love; it’s also a major event for retailers that drives billions of dollars in consumer spending on gifts and celebrations each year. While traditional gifts like flowers, candy, and greeting cards remain popular, younger generations are redefining how Valentine’s Day is celebrated by exploring alternatives beyond these traditional gifts. National Retail Federation(NRF) President and CEO Matthew Shay said that “with consumers prioritizing their spouse or significant other this year, retailers expect to see a shift in spending for certain gifting categories.” As consumer preferences shift, do Valentine’s Day retailers need a modern makeover to meet the demand? Here, we will examine the evolving landscape of Valentine’s Day spending through insights from NRF surveys, providing essential trends for retailers and marketers to adapt their strategies and offerings.
+
+## How do we get the data?
+
+### Data descriptions
+
+We obtained the dataset to analyze the Valentine’s Day Consumer Spending Trends from the [Kaggle](https://github.com/rfordatascience/tidytuesday/blob/master/data/2024/2024-02-13/readme.md) under TidyTuesday repository, compiled by Suraj Das and sourced from the National Retail Federation (NRF) surveys. These surveys provide insights into consumer spending patterns during Valentine’s Day, with responses collected annually from 2010 to 2022. Key variables in the dataset include:
+
+- **Age**: Age of respondents.
+- **Gender**: Gender of respondents (Men or Women).
+- **SpendingCelebrating**: Percent spending money on or celebrating Valentines Day
+
+- **Gift Categories**: Average percent spending on various gift types, including candy, flowers, jewelry, greeting cards, and experiences.
+
+
+### Is the data clean?
+There are two combined dataset are clean and pre-prepared. These datasets were combined based on demographic categories to provide a comprehensive analysis of Valentine’s Day spending trends.
+
+
+# More Than Flowers and Chocolates with Today's Choices
+
+```{r}
+# Load libraries
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(RColorBrewer)
+```
+
+```{r}
+#| message: FALSE
+
+#Import Dataset
+
+historical_spending <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-02-13/historical_spending.csv')
+gifts_age <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-02-13/gifts_age.csv')
+gifts_gender <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-02-13/gifts_gender.csv')
+
+setwd("/Users/nini/Downloads/assignment-3-v2-creating-a-blog-Mhon0009/posts/welcome/")
+
+historical_spending_total_expected_spending <- read.csv("historical_spending_total_expected_spending.csv")
+
+```
+
+
+```{r}
+historical_spending_total_expected_spending <- historical_spending_total_expected_spending%>%
+  rename(Year = X,
+         `Total Expected Valentine's Day Spending in billions` = Total.Expected.Valentine.s.Day.Spending..in.billions.)
+
+historical_combined_spending <- left_join(historical_spending, historical_spending_total_expected_spending, by = "Year") %>%
+  select(Year,PerPerson, `Total Expected Valentine's Day Spending in billions`)
+
+```
+
+Recent insights of the Valentine’s Day consumer data from the National Retail Federation (NRF) reveal interesting trends in how people choose to celebrate this occasion. While traditional gifts like flowers and chocolates remain popular, there is a noticeable shift in consumer preferences. As shown in @fig-historicalspending, spending on Valentine’s Day has increased from $14.1 billion in 2010 to $23.9 billion in 2022. Consumers expect to spend an average of $175.41 per person on Valentine’s Day gifts, up from $164.76 in 2021. These increases reflect changing consumer perspectives and spending behaviors, indicating that people are willing to invest more in their celebrations or in their significant others or spouses.  
+
+
+```{r}
+#| label: fig-historicalspending
+#| fig.cap: "Historical total expected and per person spending"
+
+historical_combined_spending$`Total Expected Valentine's Day Spending in billions` <- 
+  as.numeric(gsub("[\\$,B]", "", historical_combined_spending$`Total Expected Valentine's Day Spending in billions`))
+
+
+# Create the plot
+ggplot(historical_combined_spending, aes(x = Year)) +
+  geom_bar(aes(y = PerPerson), stat = "identity", fill = "hotpink") +
+  geom_line(aes(y = `Total Expected Valentine's Day Spending in billions` * 10), color = "mediumvioletred", size = 1) +  
+  geom_point(aes(y = `Total Expected Valentine's Day Spending in billions` * 10), color = "mediumvioletred", size = 2) +
+  geom_text(aes(y = `Total Expected Valentine's Day Spending in billions` * 10, 
+                label = paste0("$", `Total Expected Valentine's Day Spending in billions`, "B")),
+            vjust = -0.4, color = "black", size = 3.6)+  
+  labs(title = "Valentine's Day Spending Plans",
+       y = "Spending ($)") +
+  scale_fill_manual(values = c("Per Person Spend" = "hotpink")) +  # Specify fill color for bars
+  scale_color_manual(values = c("Total Spend" = "mediumvioletred")) + 
+  scale_x_continuous(breaks = historical_combined_spending$Year) +
+  theme_classic()+
+  theme(plot.title = element_text(hjust = 0.5, size = 16),
+        legend.position = "none")+
+  annotate("point", x = 2014, y = -12, color = "hotpink", size = 3) +  
+  annotate("text", x = 2015.1, y = -12, label = "Per Person Spend", size = 3, color = "black") + 
+  annotate("point", x = 2017, y = -12, color = "mediumvioletred", size = 3) + 
+  annotate("text", x = 2017.8, y = -12, label = "Total Spend", size = 3, color = "black") 
+
+
+```
+
+Interestingly, while overall spending continues to grow, the percentage of people celebrating Valentine’s Day has declined from 60% in 2010 to just 53% this year. This suggests that those who do celebrate are spending more, despite a growing segment of the population who are choosing to skip the holiday altogether.
+
+```{r}
+#| label: tbl-gifttrends
+#| tbl-cap: "Comparison of Historical Speding On Gifts"
+
+library(readr)
+historical_gift_trends_percent_buying <- read_csv("historical_gift_trends_percent_buying.csv")
+
+historical_gift_trends_percent_buying <- rename(historical_gift_trends_percent_buying, Year = ...1)
+
+historical_gift_trends_percent_buying %>%
+  filter(Year %in% c(2010, 2022)) %>%
+  kbl()
+
+```
+
+Taking a closer look at the survey data reveals some fascinating shifts in gift preferences. According to @tbl-gifttrends, greeting cards were the most favored gift among consumers in 2010 (56%). However, that percentage dropped to 40% in 2022, indicating a trend towards more memorable and meaningful gifts rather than expensive items. This shift highlights a  rising interest in celebrating Valentine’s Day in unique ways, focusing on original experiences or handmade gifts rather than traditional pricey options. 
+
+```{r}
+#| label: fig-giftageanalysis
+#| fig-cap: "Average Percent Spending on Different Gifts By Age Group"
+
+library(patchwork)
+
+# Use pivot_longer to reshape the data
+gifts_age_long <- gifts_age %>%
+  pivot_longer(cols = Candy:GiftCards, 
+               names_to = "GiftCategory", 
+               values_to = "Percentage")
+
+# Create the line plot for gift categories
+ggplot(gifts_age_long, aes(x = Age, y = Percentage, color = GiftCategory, group = GiftCategory)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  labs(title = "Spending on Different Gifts By Age Group",
+       x = "Age Group", 
+       y = "Percentage (%)",
+       color = "Gift Category") +
+  theme_minimal()+
+  scale_color_brewer(palette = "Accent")
+```
+[Clara Ludmir (2024)](https://www.forbes.com/sites/claraludmir/2024/02/13/valentines-day-spending-to-hit-26-billion-as-experience-gifts-grow-in-popularity/), a Forbes contributor, said that "while flowers, candy and greeting cards still top the list of main gifts, younger generations are shifting the way Valentine’s Day is being celebrated, looking beyond traditional gifts." @fig-giftageanalysis shows that younger consumers (ages 18-34) are more inclined toward purchasing candy (70%), flowers (50%), and spending on an evening out (40%), while older demographics (from ages 35 to ages 55 and above) tend to favor memorable gifts like greeting cards, candy, and flowers. It looks like the decline in greeting card sales in 2022 (@tbl-gifttrends) may be connected to older consumers choosing not to celebrate Valentine’s Day. For instance, only 19% of consumers aged 45-54 indicated that they would celebrate this holiday, according to a [survey data](https://www.kaggle.com/datasets/infinator/happy-valentines-day-2022?select=spending_or_celebrating_age_1.csv) released by the NRF.
+
+```{r}
+#| label: fig-giftgenderanalysis
+#| fig-cap: "Average Percent Spending on Different Gifts By Gender"
+
+# Use pivot_longer to reshape the data
+gifts_gender_long <- gifts_gender %>%
+  pivot_longer(cols = Candy:GiftCards, 
+               names_to = "GiftCategory", 
+               values_to = "Percentage")
+
+# Bar plot for gift categories by gender
+ggplot(gifts_gender_long, aes(x = Gender, y = Percentage, fill = GiftCategory)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Spending on Different Gifts By Gender",
+       x = "Gender",
+       y = "Percentage (%)",
+       fill = "Gift Category") +
+  theme_minimal()+
+  scale_fill_brewer(palette = "Pastel2")  
+
+```
+
+The survey data reveals that both genders spending money on or celebrating Valentines Day are the same (27%).  However, when it comes to the types of gifts purchased, the differences are quite interesting. As highlighted in @fig-giftgenderanalysis, men are more likely to buy jewelry and expensive experiences, while women often opt for more budget-friendly options like greeting cards, candy, and clothing. Interestingly, even as younger generations change how they celebrate Valentine’s Day and move away from traditional gifts, the preference for flowers remains strong among men. In fact, 56% of men still purchase flowers, compared to only 19% of women. This indicates that flowers continue to represent a traditional mindset in gift-giving, typically given by men rather than women, regardless of age or the changes that have taken place over time. Therefore, retailers who heavily rely on Valentine’s Day sales can be confident that this aspect of consumer behavior is unlikely to change.
+
+The analysis of Valentine’s Day spending trends reveals some significant shifts in consumer preferences. These shifts represent an interesting opportunity for retailers across various categories to leverage Valentine’s Day to promote their products. While total spending has generally increased, this could be driven by both inflation and evolving preferences toward experiences over traditional gifts. It’s also important to note the decline in the percentage of people celebrating the holiday. Younger generations are stepping away from traditional gifts—especially greeting cards—favoring experiences and more personalized options instead. In contrast, older generations tend to purchase sentimental or memorable items.
+
+Gender differences and demographic factors play a crucial role in shaping spending patterns, providing valuable insights for targeted marketing strategies. Young men, in particular, emerge as key consumers, often feeling uncertain about what to buy for Valentine’s Day. This analysis highlights both the challenges and opportunities for retailers, emphasizing the importance of understanding evolving consumer preferences in order to tailor marketing strategies and product offerings effectively. As younger consumers seek more meaningful ways to celebrate love, they may prefer original and unique gifts over traditional gift categories. "This will push retailers to innovate and be creative, allowing traditional gifts like flowers and chocolates to make space for fresh alternatives like non-alcoholic spritzers and self-care beauty packages." said Clara Ludmir, a Forbes contributor. Despite the changes in how Valentine’s Day is celebrated, the holiday continues to be a significant event for consumer spending, with sales expected to grow in the coming year.
+
 
 
