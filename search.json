@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Min Ni Hong",
+    "section": "",
+    "text": "I am currently a Master of Business Analytics student at Monash University. I’m dedicated to understanding and analyzing business market trends, with a keen interest in environmental data and their implications on sustainability and business decisions.\n\nMy research interests include:\n\nBusiness market trend analysis,\nEnvironmental data analytics,\nData visualization,\nPredictive modeling in business contexts,\nUnderstanding the impact of economic trends on consumer choices\n\n\nI am an advocate for the responsible use of data and believe in maintaining transparency while ensuring privacy in analytics. My active GitHub profile contains various business analytics reports that I share publicly.\nI enjoy working on business analytics assignments in this course, which align with my passion. I am keen to exploring more about how analytics works in the real world."
+  },
+  {
+    "objectID": "posts/welcome/index.html#how-do-we-get-the-data",
+    "href": "posts/welcome/index.html#how-do-we-get-the-data",
+    "title": "Valentine’s Day Consumer Spending Trends",
+    "section": "How do we get the data?",
+    "text": "How do we get the data?\n\nData descriptions\nWe obtained the dataset to analyze the Valentine’s Day Consumer Spending Trends from the Kaggle under TidyTuesday repository, compiled by Suraj Das and sourced from the National Retail Federation (NRF) surveys. These surveys provide insights into consumer spending patterns during Valentine’s Day, with responses collected annually from 2010 to 2022. Key variables in the dataset include:\n\nAge: Age of respondents.\nGender: Gender of respondents (Men or Women).\nSpendingCelebrating: Percent spending money on or celebrating Valentines Day\nGift Categories: Average percent spending on various gift types, including candy, flowers, jewelry, greeting cards, and experiences.\n\n\n\nIs the data clean?\nThere are two combined dataset are clean and pre-prepared. These datasets were combined based on demographic categories to provide a comprehensive analysis of Valentine’s Day spending trends."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "My Blog",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nValentine’s Day Consumer Spending Trends\n\n\n\n\n\n\nnews\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nOct 3, 2024\n\n\nMin Ni Hong\n\n\n\n\n\n\nNo matching items"
+  }
+]
