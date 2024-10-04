@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Min Ni Hong">
-<meta name="dcterms.date" content="2024-10-03">
 
-<title>AnalyticsInAction.com - Valentine’s Day Consumer Spending Trends</title>
+<title>AnalyticsInAction.com - My Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,22 +23,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,21 +68,77 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
 
-<link rel="stylesheet" href="../../styles.css">
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
+      
+      searchColumns: ["listing-title","listing-date"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">AnalyticsInAction.com</span>
     </a>
   </div>
@@ -93,11 +149,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
+    <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About me</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">My Blog</span></a>
   </li>  
 </ul>
@@ -117,178 +173,102 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Valentine’s Day Consumer Spending Trends</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">news</div>
-                <div class="quarto-category">analysis</div>
-              </div>
-                  </div>
+    <div class="quarto-title column-page-left">
+      <h1 class="title">My Blog</h1>
+                      </div>
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Min Ni Hong </p>
-            </div>
-    </div>
       
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">October 3, 2024</p>
-      </div>
-    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
 
-<p><img src="valentine.png" class="img-fluid"></p>
-<section id="valentines-day-a-love-story-for-consumers-and-retailers-alike" class="level1">
-<h1>Valentine’s Day: A Love Story for Consumers and Retailers Alike</h1>
-<p>As Valentine’s Day approaches, many of us start thinking about how to show our love and appreciation for our partners, friends, and family. However, Valentine’s Day is more than just a day of love; it’s also a major event for retailers that drives billions of dollars in consumer spending on gifts and celebrations each year. While traditional gifts like flowers, candy, and greeting cards remain popular, younger generations are redefining how Valentine’s Day is celebrated by exploring alternatives beyond these traditional gifts. National Retail Federation(NRF) President and CEO Matthew Shay said that “with consumers prioritizing their spouse or significant other this year, retailers expect to see a shift in spending for certain gifting categories.” As consumer preferences shift, do Valentine’s Day retailers need a modern makeover to meet the demand? Here, we will examine the evolving landscape of Valentine’s Day spending through insights from NRF surveys, providing essential trends for retailers and marketers to adapt their strategies and offerings.</p>
-<section id="how-do-we-get-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="how-do-we-get-the-data">How do we get the data?</h2>
-<section id="data-descriptions" class="level3">
-<h3 class="anchored" data-anchor-id="data-descriptions">Data descriptions</h3>
-<p>We obtained the dataset to analyze the Valentine’s Day Consumer Spending Trends from the <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2024/2024-02-13/readme.md">Kaggle</a> under TidyTuesday repository, compiled by Suraj Das and sourced from the National Retail Federation (NRF) surveys. These surveys provide insights into consumer spending patterns during Valentine’s Day, with responses collected annually from 2010 to 2022. Key variables in the dataset include:</p>
-<ul>
-<li><p><strong>Age</strong>: Age of respondents.</p></li>
-<li><p><strong>Gender</strong>: Gender of respondents (Men or Women).</p></li>
-<li><p><strong>SpendingCelebrating</strong>: Percent spending money on or celebrating Valentines Day</p></li>
-<li><p><strong>Gift Categories</strong>: Average percent spending on various gift types, including candy, flowers, jewelry, greeting cards, and experiences.</p></li>
-</ul>
-</section>
-<section id="is-the-data-clean" class="level3">
-<h3 class="anchored" data-anchor-id="is-the-data-clean">Is the data clean?</h3>
-<p>There are two combined dataset are clean and pre-prepared. These datasets were combined based on demographic categories to provide a comprehensive analysis of Valentine’s Day spending trends.</p>
-</section>
-</section>
-</section>
-<section id="more-than-flowers-and-chocolates-with-todays-choices" class="level1">
-<h1>More Than Flowers and Chocolates with Today’s Choices</h1>
-<p>Recent insights of the Valentine’s Day consumer data from the National Retail Federation (NRF) reveal interesting trends in how people choose to celebrate this occasion. While traditional gifts like flowers and chocolates remain popular, there is a noticeable shift in consumer preferences. As shown in <a href="#fig-historicalspending" class="quarto-xref">Figure&nbsp;1</a>, spending on Valentine’s Day has increased from $14.1 billion in 2010 to $23.9 billion in 2022. Consumers expect to spend an average of $175.41 per person on Valentine’s Day gifts, up from $164.76 in 2021. These increases reflect changing consumer perspectives and spending behaviors, indicating that people are willing to invest more in their celebrations or in their significant others or spouses.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-historicalspending" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-pos="H">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-historicalspending-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-historicalspending-1.png" class="img-fluid figure-img" style="width:100.0%" data-fig-pos="H">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-historicalspending-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Historical total expected and per person spending
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Interestingly, while overall spending continues to grow, the percentage of people celebrating Valentine’s Day has declined from 60% in 2010 to just 53% this year. This suggests that those who do celebrate are spending more, despite a growing segment of the population who are choosing to skip the holiday altogether.</p>
-<div class="cell">
-<div id="tbl-gifttrends" class="cell quarto-float anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-gifttrends-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Comparison of Historical Speding On Gifts
-</figcaption>
-<div aria-describedby="tbl-gifttrends-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
-<div>
-<table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
-<thead>
-<tr class="header">
-<th style="text-align: right;" data-quarto-table-cell-role="th">Year</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Candy</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Flowers</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Jewelry</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Greeting cards</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">An evening out</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Clothing</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Gift cards</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">2010</td>
-<td style="text-align: left;">47%</td>
-<td style="text-align: left;">36%</td>
-<td style="text-align: left;">15%</td>
-<td style="text-align: left;">55%</td>
-<td style="text-align: left;">36%</td>
-<td style="text-align: left;">14%</td>
-<td style="text-align: left;">11%</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2022</td>
-<td style="text-align: left;">56%</td>
-<td style="text-align: left;">37%</td>
-<td style="text-align: left;">22%</td>
-<td style="text-align: left;">40%</td>
-<td style="text-align: left;">31%</td>
-<td style="text-align: left;">22%</td>
-<td style="text-align: left;">21%</td>
-</tr>
-</tbody>
-</table>
 
 
-</div>
-</div>
-</div>
-</figure>
-</div>
-</div>
-<p>Taking a closer look at the survey data reveals some fascinating shifts in gift preferences. According to <a href="#tbl-gifttrends" class="quarto-xref">Table&nbsp;1</a>, greeting cards were the most favored gift among consumers in 2010 (56%). However, that percentage dropped to 40% in 2022, indicating a trend towards more memorable and meaningful gifts rather than expensive items. This shift highlights a rising interest in celebrating Valentine’s Day in unique ways, focusing on original experiences or handmade gifts rather than traditional pricey options.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-giftageanalysis" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-pos="H">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-giftageanalysis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-giftageanalysis-1.png" class="img-fluid figure-img" style="width:100.0%" data-fig-pos="H">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-giftageanalysis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Average Percent Spending on Different Gifts By Age Group
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p><a href="https://www.forbes.com/sites/claraludmir/2024/02/13/valentines-day-spending-to-hit-26-billion-as-experience-gifts-grow-in-popularity/">Clara Ludmir (2024)</a>, a Forbes contributor, said that “while flowers, candy and greeting cards still top the list of main gifts, younger generations are shifting the way Valentine’s Day is being celebrated, looking beyond traditional gifts.” <a href="#fig-giftageanalysis" class="quarto-xref">Figure&nbsp;2</a> shows that younger consumers (ages 18-34) are more inclined toward purchasing candy (70%), flowers (50%), and spending on an evening out (40%), while older demographics (from ages 35 to ages 55 and above) tend to favor memorable gifts like greeting cards, candy, and flowers. It looks like the decline in greeting card sales in 2022 (<a href="#tbl-gifttrends" class="quarto-xref">Table&nbsp;1</a>) may be connected to older consumers choosing not to celebrate Valentine’s Day. For instance, only 19% of consumers aged 45-54 indicated that they would celebrate this holiday, according to a <a href="https://www.kaggle.com/datasets/infinator/happy-valentines-day-2022?select=spending_or_celebrating_age_1.csv">survey data</a> released by the NRF.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-giftgenderanalysis" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-pos="H">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-giftgenderanalysis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-giftgenderanalysis-1.png" class="img-fluid figure-img" style="width:100.0%" data-fig-pos="H">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-giftgenderanalysis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Average Percent Spending on Different Gifts By Gender
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>The survey data reveals that both genders spending money on or celebrating Valentines Day are the same (27%). However, when it comes to the types of gifts purchased, the differences are quite interesting. As highlighted in <a href="#fig-giftgenderanalysis" class="quarto-xref">Figure&nbsp;3</a>, men are more likely to buy jewelry and expensive experiences, while women often opt for more budget-friendly options like greeting cards, candy, and clothing. Interestingly, even as younger generations change how they celebrate Valentine’s Day and move away from traditional gifts, the preference for flowers remains strong among men. In fact, 56% of men still purchase flowers, compared to only 19% of women. This indicates that flowers continue to represent a traditional mindset in gift-giving, typically given by men rather than women, regardless of age or the changes that have taken place over time. Therefore, retailers who heavily rely on Valentine’s Day sales can be confident that this aspect of consumer behavior is unlikely to change.</p>
-<p>The analysis of Valentine’s Day spending trends reveals some significant shifts in consumer preferences. These shifts represent an interesting opportunity for retailers across various categories to leverage Valentine’s Day to promote their products. While total spending has generally increased, this could be driven by both inflation and evolving preferences toward experiences over traditional gifts. It’s also important to note the decline in the percentage of people celebrating the holiday. Younger generations are stepping away from traditional gifts—especially greeting cards—favoring experiences and more personalized options instead. In contrast, older generations tend to purchase sentimental or memorable items.</p>
-<p>Gender differences and demographic factors play a crucial role in shaping spending patterns, providing valuable insights for targeted marketing strategies. Young men, in particular, emerge as key consumers, often feeling uncertain about what to buy for Valentine’s Day. This analysis highlights both the challenges and opportunities for retailers, emphasizing the importance of understanding evolving consumer preferences in order to tailor marketing strategies and product offerings effectively. As younger consumers seek more meaningful ways to celebrate love, they may prefer original and unique gifts over traditional gift categories. “This will push retailers to innovate and be creative, allowing traditional gifts like flowers and chocolates to make space for fresh alternatives like non-alcoholic spritzers and self-care beauty packages.” said Clara Ludmir, a Forbes contributor. Despite the changes in how Valentine’s Day is celebrated, the holiday continues to be a significant event for consumer spending, with sales expected to grow in the coming year.</p>
 
 
-</section>
-
-</main> <!-- /main -->
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+     </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="news,analysis" data-listing-date-sort="1727877600000" data-listing-file-modified-sort="1728029596240" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1738">
+<div class="thumbnail">
+<p><a href="./posts/welcome/index.html" class="no-external"></a></p><a href="./posts/welcome/index.html" class="no-external">
+<p class="card-img-top"><img src="posts/welcome/valentine.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/welcome/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/welcome/index.html" class="no-external">Valentine’s Day Consumer Spending Trends</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/welcome/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
+news
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
+analysis
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/welcome/index.html" class="no-external">As Valentine’s Day approaches, many of us start thinking about how to show our love and appreciation for our partners, friends, and family. However, Valentine’s Day is more…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/welcome/index.html" class="no-external">
+<div class="listing-date">
+Oct 3, 2024
+</div>
+<div class="listing-author">
+Min Ni Hong
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
