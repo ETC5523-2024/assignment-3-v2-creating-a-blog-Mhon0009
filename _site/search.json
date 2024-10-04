@@ -1,19 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "My Blog",
-    "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nValentine’s Day Consumer Spending Trends\n\n\n\n\n\n\nnews\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nOct 3, 2024\n\n\nMin Ni Hong\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Valentine’s Day Consumer Spending Trends",
-    "section": "",
-    "text": "What do recent data say about consumer spending On Valentince’s Day?\nAs Valentine’s Day approaches, many of us start thinking about how to show our love and appreciation for our partners, friends, and family. However, Valentine’s Day is more than just a day of love; it’s also a major event for retailers that drives billions of dollars in consumer spending on gifts and celebrations each year. While traditional gifts like flowers, candy, and greeting cards remain popular, but younger generations are redefining how Valentine’s Day is celebrated by exploring alternatives beyond these traditional gifts. NRF President and CEO Matthew Shay said that “with consumers prioritizing their spouse or significant other this year, retailers expect to see a shift in spending for certain gifting categories.” As consumer preferences shift, is Valentine’s Day retail need of a modern makeover to meet the demand? Hence, we will examine the evolving landscape of Valentine’s Day spending through insights from National Retail Federation (NRF) surveys, providing essential trends for retailers and marketers to adapt their strategies and offerings.\n\n\nData from?\nData description Analysis Conclusio"
-  },
-  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "Min Ni Hong",
@@ -21,66 +7,17 @@
     "text": "I am currently a Master of Business Analytics student at Monash University. I’m dedicated to understanding and analyzing business market trends, with a keen interest in environmental data and their implications on sustainability and business decisions.\n\nMy research interests include:\n\nBusiness market trend analysis,\nEnvironmental data analytics,\nData visualization,\nPredictive modeling in business contexts,\nUnderstanding the impact of economic trends on consumer choices\n\n\nI am an advocate for the responsible use of data and believe in maintaining transparency while ensuring privacy in analytics. My active GitHub profile contains various business analytics reports that I share publicly.\nI enjoy working on business analytics assignments in this course, which align with my passion. I am keen to exploring more about how analytics works in the real world."
   },
   {
-    "objectID": "posts/welcome/index.html#g",
-    "href": "posts/welcome/index.html#g",
-    "title": "Welcome To My Blog Template",
-    "section": "G",
-    "text": "G\n\nNGNR\n\nFHIHIG"
-  },
-  {
-    "objectID": "posts/welcome/index.html#hfihf",
-    "href": "posts/welcome/index.html#hfihf",
-    "title": "Welcome To My Blog Template",
-    "section": "HFIHF",
-    "text": "HFIHF\n\nHKFN\n\n\n\nThumbnail Image"
-  },
-  {
-    "objectID": "posts/welcome/index.html#bebfnbkr",
-    "href": "posts/welcome/index.html#bebfnbkr",
-    "title": "Valentine’s Day Insights",
-    "section": "bebfnbkr",
-    "text": "bebfnbkr\n\ngjgk\n\nnfkrkr"
-  },
-  {
-    "objectID": "about.html#min-ni-hong-this-will-display-your-name-under-the-photo",
-    "href": "about.html#min-ni-hong-this-will-display-your-name-under-the-photo",
-    "title": "About",
-    "section": "Min Ni Hong # This will display your name under the photo",
-    "text": "Min Ni Hong # This will display your name under the photo"
-  },
-  {
-    "objectID": "about.html#my-research-interests-include",
-    "href": "about.html#my-research-interests-include",
-    "title": "Min Ni Hong",
-    "section": "My research interests include:",
-    "text": "My research interests include:\n\nBusiness market trend analysis,\nEnvironmental data analytics,\nData visualization,\nPredictive modeling in business contexts,\nUnderstanding the impact of economic trends on consumer choices"
-  },
-  {
-    "objectID": "posts/welcome/index.html#what-do-recent-data-say-about-consumer-spending-on-valentinces-day",
-    "href": "posts/welcome/index.html#what-do-recent-data-say-about-consumer-spending-on-valentinces-day",
-    "title": "Valentine’s Day Consumer Spending Trends",
-    "section": "What do recent data say about consumer spending On Valentince’s Day?",
-    "text": "What do recent data say about consumer spending On Valentince’s Day?\nData description Analysis Conclusio"
-  },
-  {
-    "objectID": "posts/welcome/index.html#data-from",
-    "href": "posts/welcome/index.html#data-from",
-    "title": "Valentine’s Day Consumer Spending Trends",
-    "section": "Data from?",
-    "text": "Data from?\nData description Analysis Conclusio"
-  },
-  {
-    "objectID": "posts/welcome/index.html#how-to-do-get-the-data",
-    "href": "posts/welcome/index.html#how-to-do-get-the-data",
-    "title": "Valentine’s Day Consumer Spending Trends",
-    "section": "How to do get the data?",
-    "text": "How to do get the data?\n\nData descriptions\nThe data analyzed in this post is sourced from the National Retail Federation (NRF) surveys, which provide insights into consumer spending behavior during Valentine’s Day. The dataset includes responses collected annually from 2010 to 2022. Key variables in the dataset include:\nAge: Demographic information of respondents. Gender: Gender of respondents (Men or Women). SpendingCelebrating: Percentage of consumers spending on or celebrating Valentine’s Day. Gift Categories: Percent spending on various gift types, including candy, flowers, jewelry, greeting cards, and experiences. The dataset was pre-cleaned and consists of two combined datasets to facilitate a comprehensive analysis of spending trends.\n\n\nData Cleaning Steps\nCombined datasets based on demographic categories. Removed any outliers that could skew the analysis. Ensured all categorical variables were consistently labeled.\nData description Analysis Conclusio"
-  },
-  {
     "objectID": "posts/welcome/index.html#how-do-we-get-the-data",
     "href": "posts/welcome/index.html#how-do-we-get-the-data",
     "title": "Valentine’s Day Consumer Spending Trends",
     "section": "How do we get the data?",
     "text": "How do we get the data?\n\nData descriptions\nWe obtained the dataset to analyze the Valentine’s Day Consumer Spending Trends from the Kaggle under TidyTuesday repository, compiled by Suraj Das and sourced from the National Retail Federation (NRF) surveys. These surveys provide insights into consumer spending patterns during Valentine’s Day, with responses collected annually from 2010 to 2022. Key variables in the dataset include:\n\nAge: Age of respondents.\nGender: Gender of respondents (Men or Women).\nSpendingCelebrating: Percent spending money on or celebrating Valentines Day\nGift Categories: Average percent spending on various gift types, including candy, flowers, jewelry, greeting cards, and experiences.\n\n\n\nIs the data clean?\nThere are two combined dataset are clean and pre-prepared. These datasets were combined based on demographic categories to provide a comprehensive analysis of Valentine’s Day spending trends."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "My Blog",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nValentine’s Day Consumer Spending Trends\n\n\n\n\n\n\nnews\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nOct 3, 2024\n\n\nMin Ni Hong\n\n\n\n\n\n\nNo matching items"
   }
 ]
