@@ -1,0 +1,18 @@
+invoice_id,supplier,po_id,po_amount,invoice_amount,total_paid,exception_type
+INV-2017,Coastal Logistics,PO-9999,,640.0,640.0,No matching PO
+INV-2001,Fenwick IT Services,PO-1001,734.39,734.39,734.39,OK
+INV-2002,Bright Office Supplies,PO-1002,869.78,869.78,869.78,OK
+INV-2004,Delta Print & Design,PO-1004,352.56,352.56,352.56,OK
+INV-2007,Delta Print & Design,PO-1007,3028.48,3028.48,3028.48,OK
+INV-2009,Bright Office Supplies,PO-1009,1233.51,1233.51,1233.51,OK
+INV-2010,Alpha Trading Co,PO-1010,2023.65,2023.65,2023.65,OK
+INV-2011,Alpha Trading Co,PO-1010,2023.65,2023.65,2023.65,OK
+INV-2013,Delta Print & Design,PO-1012,2773.89,2773.89,2773.89,OK
+INV-2014,Everline Packaging,PO-1013,1607.26,1607.26,1607.26,OK
+INV-2015,Bright Office Supplies,PO-1014,3581.94,3581.94,3581.94,OK
+INV-2016,Bright Office Supplies,PO-1015,3910.73,3910.73,3910.73,OK
+INV-2003,Fenwick IT Services,PO-1003,4482.46,4632.46,4632.46,PO/Invoice amount mismatch
+INV-2006,Bright Office Supplies,PO-1006,3636.89,3561.39,3561.39,PO/Invoice amount mismatch
+INV-2008,Bright Office Supplies,PO-1008,3551.07,3551.07,2130.64,Payment amount mismatch
+INV-2005,Bright Office Supplies,PO-1005,2625.71,2625.71,0,Unpaid
+INV-2012,Coastal Logistics,PO-1011,3097.88,3097.88,0,Unpaid

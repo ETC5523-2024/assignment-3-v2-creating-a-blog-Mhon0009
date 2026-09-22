@@ -1,0 +1,154 @@
+---
+title: "Automating Invoice Reconciliation: A SQL, Excel and Power Automate Approach"
+description: "Designing a three-way match to catch invoice exceptions before they become payment errors, and automating the alert."
+author: "Min Ni Hong"
+date: 2026-09-22
+categories: [SQL, Excel, Power Automate, Finance Automation]
+image: img/exception_summary.png
+---
+
+## The problem
+
+Anyone who has processed accounts payable by hand knows the routine: check the
+invoice against the purchase order, check the purchase order against what was
+actually paid, and hope nothing slips through. When I worked accounts payable
+for a small supplier base, this meant manually cross-checking every invoice
+against roughly 10-20 suppliers' worth of purchase orders and bank
+reconciliations in Excel. It worked, but it did not scale, and it relied on
+someone remembering to look.
+
+This post walks through a small proof-of-concept for the part of that job
+that *should* be automated: a **three-way match** between purchase orders,
+invoices and payments, with exceptions flagged automatically instead of
+found by chance.
+
+The scenario is a mock dataset (17 invoices against 15 purchase orders and 15
+payments), but the logic is the same shape as real AP reconciliation work:
+catch amount mismatches, unpaid invoices, and invoices with no purchase order
+behind them at all.
+
+## Step 1: The data
+
+Three tables, structured the way they would sit in a small ERP or a
+SharePoint list:
+
+- **Purchase Orders** — `PO_ID`, `Supplier`, `PO_Amount`, `PO_Date`
+- **Invoices** — `Invoice_ID`, `PO_ID`, `Supplier`, `Invoice_Amount`, `Invoice_Date`
+- **Payments** — `Payment_ID`, `Invoice_ID`, `Payment_Amount`, `Payment_Date`
+
+I deliberately seeded a few exceptions into the data: two invoices that
+overshoot or undershoot their PO amount, two unpaid invoices, one invoice
+paid short, and one invoice with no matching PO at all (an unauthorised
+purchase).
+
+## Step 2: The matching logic in SQL
+
+The core of the reconciliation is a `LEFT JOIN` from invoices out to POs and
+payments, with a `CASE` statement doing the exception classification:
+
+```sql
+WITH matched AS (
+    SELECT
+        i.invoice_id,
+        i.supplier,
+        i.po_id,
+        po.po_amount,
+        i.invoice_amount,
+        COALESCE(SUM(p.payment_amount), 0) AS total_paid
+    FROM invoices i
+    LEFT JOIN purchase_orders po ON po.po_id = i.po_id
+    LEFT JOIN payments p ON p.invoice_id = i.invoice_id
+    GROUP BY i.invoice_id
+)
+SELECT
+    invoice_id, supplier, po_id, po_amount, invoice_amount, total_paid,
+    CASE
+        WHEN po_amount IS NULL THEN 'No matching PO'
+        WHEN ABS(invoice_amount - po_amount) > 0.01 THEN 'PO/Invoice amount mismatch'
+        WHEN total_paid = 0 THEN 'Unpaid'
+        WHEN ABS(total_paid - invoice_amount) > 0.01 THEN 'Payment amount mismatch'
+        ELSE 'OK'
+    END AS exception_type
+FROM matched
+ORDER BY exception_type, invoice_id;
+```
+
+Running this against the mock dataset returns **6 exceptions out of 17
+invoices**: 2 amount mismatches, 2 unpaid, 1 short payment, and 1 invoice
+with no PO behind it. The full dataset and query are in the repo alongside
+this post.
+
+I used `LEFT JOIN` rather than `INNER JOIN` deliberately: an inner join
+would silently drop exactly the rows I most need to see (invoices with no
+PO, invoices with no payment). The exceptions are the point, not the noise
+to filter out.
+
+## Step 3: The same logic in Excel
+
+Not every finance team has a database sitting behind their AP process, so I
+rebuilt the same check as a formula-driven Excel workbook, since that is
+still where a lot of reconciliation actually happens:
+
+- `INDEX`/`MATCH` pulls the PO amount across from the Purchase Orders sheet
+  for each invoice
+- `SUMIF` totals payments against each invoice
+- A nested `IF` chain classifies the exception type, in the same order as
+  the SQL `CASE` statement
+- Conditional formatting highlights any row that isn't `OK`
+- A summary sheet counts exceptions by type with `COUNTIF`, giving a
+  one-glance view for anyone who just wants the headline
+
+Everything in the Exceptions and Summary tabs is a live formula, not a
+pasted value, so the sheet re-flags automatically if the underlying data
+changes. The workbook is attached in the repo.
+
+## Step 4: Automating the check
+
+A spreadsheet that someone has to remember to open is only half a solution.
+The next piece is having the exception check run on its own and alert the
+right person.
+
+Below is the Power Automate flow I designed for this: it is not yet
+deployed against a live tenant (my Power Platform work so far has been
+self-study through Microsoft Learn and Coursera, not a production
+environment), but the logic maps directly onto the SQL and Excel version
+above, and it is one I plan to actually build out next.
+
+```{mermaid}
+flowchart TD
+    A[Recurrence trigger: daily 7am] --> B[List rows: Exceptions table]
+    B --> C{Any rows where<br/>Exception_Type != OK?}
+    C -- Yes --> D[Create HTML table from filtered rows]
+    D --> E[Send email to AP team<br/>with exception summary]
+    D --> F[Post summary to<br/>Finance-Ops Teams channel]
+    C -- No --> G[Log 'no exceptions' to tracking list]
+```
+
+The design choices mirror what I'd actually want in production:
+
+- **Recurrence trigger**, not a manual run, so nobody has to remember
+- **Filter before notifying**, so the AP team only gets an email when there
+  is something to act on, not a daily "all clear" that trains people to
+  ignore it
+- **Two outputs** (email and Teams) because the people who need the detail
+  and the people who just need to know "is there a problem today" are often
+  different audiences
+
+## What this does and does not show
+
+I want to be upfront about the scope here. The SQL and Excel pieces are
+fully built and tested against the dataset in this repo, results match
+exactly between the two approaches. The Power Automate flow is a design I
+can build and explain, not yet something running against live data. For a
+role that specifically asks for Power Platform experience, that is a real
+gap, and this project is my way of closing it deliberately rather than
+listing the tool on a resume without having built anything.
+
+**Next steps I'm taking:** setting this exact flow up in a Microsoft 365
+developer sandbox, and adding a Power BI page on top of the Summary sheet
+so the exception trend is visible over time, not just as a single snapshot.
+
+## Files
+
+All data, the SQL script, and the Excel workbook are in the `data/` folder
+next to this post.

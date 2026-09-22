@@ -1,0 +1,18 @@
+Invoice_ID,PO_ID,Supplier,Invoice_Amount,Invoice_Date
+INV-2001,PO-1001,Fenwick IT Services,734.39,2026-05-08
+INV-2002,PO-1002,Bright Office Supplies,869.78,2026-02-22
+INV-2003,PO-1003,Fenwick IT Services,4632.46,2026-02-19
+INV-2004,PO-1004,Delta Print & Design,352.56,2026-02-07
+INV-2005,PO-1005,Bright Office Supplies,2625.71,2026-01-18
+INV-2006,PO-1006,Bright Office Supplies,3561.39,2026-07-08
+INV-2007,PO-1007,Delta Print & Design,3028.48,2026-01-25
+INV-2008,PO-1008,Bright Office Supplies,3551.07,2026-06-09
+INV-2009,PO-1009,Bright Office Supplies,1233.51,2026-06-04
+INV-2010,PO-1010,Alpha Trading Co,2023.65,2026-06-28
+INV-2011,PO-1010,Alpha Trading Co,2023.65,2026-06-28
+INV-2012,PO-1011,Coastal Logistics,3097.88,2026-01-24
+INV-2013,PO-1012,Delta Print & Design,2773.89,2026-07-03
+INV-2014,PO-1013,Everline Packaging,1607.26,2026-06-19
+INV-2015,PO-1014,Bright Office Supplies,3581.94,2026-01-22
+INV-2016,PO-1015,Bright Office Supplies,3910.73,2026-02-28
+INV-2017,PO-9999,Coastal Logistics,640.0,2026-07-15
