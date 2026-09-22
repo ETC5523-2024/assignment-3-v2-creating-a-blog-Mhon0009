@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/automating-invoice-reconciliation/index.html",
       "/posts/welcome/index.html"
     ]
   }

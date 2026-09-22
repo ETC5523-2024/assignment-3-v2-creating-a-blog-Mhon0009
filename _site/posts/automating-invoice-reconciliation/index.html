@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Min Ni Hong">
-<meta name="dcterms.date" content="2024-10-03">
+<meta name="dcterms.date" content="2026-09-22">
+<meta name="description" content="Designing a three-way match to catch invoice exceptions before they become payment errors, and automating the alert.">
 
-<title>Valentine’s Day Consumer Spending Trends – AnalyticsInAction.com</title>
+<title>Automating Invoice Reconciliation: A SQL, Excel and Power Automate Approach – AnalyticsInAction.com</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -69,8 +105,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -119,10 +156,17 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Valentine’s Day Consumer Spending Trends</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">news</div>
-                <div class="quarto-category">analysis</div>
+      <h1 class="title">Automating Invoice Reconciliation: A SQL, Excel and Power Automate Approach</h1>
+                  <div>
+        <div class="description">
+          Designing a three-way match to catch invoice exceptions before they become payment errors, and automating the alert.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">SQL</div>
+                <div class="quarto-category">Excel</div>
+                <div class="quarto-category">Power Automate</div>
+                <div class="quarto-category">Finance Automation</div>
               </div>
                   </div>
   </div>
@@ -140,7 +184,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 3, 2024</p>
+        <p class="date">September 22, 2026</p>
       </div>
     </div>
     
@@ -159,128 +203,101 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p><img src="valentine.png" class="img-fluid"></p>
-<section id="valentines-day-a-love-story-for-consumers-and-retailers-alike" class="level1">
-<h1>Valentine’s Day: A Love Story for Consumers and Retailers Alike</h1>
-<p>As Valentine’s Day approaches, many of us start thinking about how to show our love and appreciation for our partners, friends, and family. However, Valentine’s Day is more than just a day of love; it’s also a major event for retailers that drives billions of dollars in consumer spending on gifts and celebrations each year. While traditional gifts like flowers, candy, and greeting cards remain popular, younger generations are redefining how Valentine’s Day is celebrated by exploring alternatives beyond these traditional gifts. <a href="https://nrf.com/media-center/press-releases/americans-spend-239-billion-valentines-day-year">National Retail Federation(NRF) President and CEO Matthew Shay</a> said that “with consumers prioritizing their spouse or significant other this year, retailers expect to see a shift in spending for certain gifting categories.” As consumer preferences shift, do Valentine’s Day retailers need a modern makeover to meet the demand? Here, we will examine the evolving landscape of Valentine’s Day spending through insights from NRF surveys, providing essential trends for retailers and marketers to adapt their strategies and offerings.</p>
-<section id="how-do-we-get-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="how-do-we-get-the-data">How do we get the data?</h2>
-<section id="data-descriptions" class="level3">
-<h3 class="anchored" data-anchor-id="data-descriptions">Data descriptions</h3>
-<p>We obtained the dataset to analyze the Valentine’s Day Consumer Spending Trends from the <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2024/2024-02-13/readme.md">Kaggle</a> under TidyTuesday repository, compiled by Suraj Das and sourced from the National Retail Federation (NRF) surveys. These surveys provide insights into consumer spending patterns during Valentine’s Day, with responses collected annually from 2010 to 2022. Key variables in the dataset include:</p>
+<section id="the-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
+<p>Anyone who has processed accounts payable by hand knows the routine: check the invoice against the purchase order, check the purchase order against what was actually paid, and hope nothing slips through. When I worked accounts payable for a small supplier base, this meant manually cross-checking every invoice against roughly 10-20 suppliers’ worth of purchase orders and bank reconciliations in Excel. It worked, but it did not scale, and it relied on someone remembering to look.</p>
+<p>This post walks through a small proof-of-concept for the part of that job that <em>should</em> be automated: a <strong>three-way match</strong> between purchase orders, invoices and payments, with exceptions flagged automatically instead of found by chance.</p>
+<p>The scenario is a mock dataset (17 invoices against 15 purchase orders and 15 payments), but the logic is the same shape as real AP reconciliation work: catch amount mismatches, unpaid invoices, and invoices with no purchase order behind them at all.</p>
+</section>
+<section id="step-1-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-the-data">Step 1: The data</h2>
+<p>Three tables, structured the way they would sit in a small ERP or a SharePoint list:</p>
 <ul>
-<li><p><strong>Age</strong>: Age of respondents.</p></li>
-<li><p><strong>Gender</strong>: Gender of respondents (Men or Women).</p></li>
-<li><p><strong>SpendingCelebrating</strong>: Percent spending money on or celebrating Valentines Day</p></li>
-<li><p><strong>Gift Categories</strong>: Average percent spending on various gift types, including candy, flowers, jewelry, greeting cards, and experiences.</p></li>
+<li><strong>Purchase Orders</strong> — <code>PO_ID</code>, <code>Supplier</code>, <code>PO_Amount</code>, <code>PO_Date</code></li>
+<li><strong>Invoices</strong> — <code>Invoice_ID</code>, <code>PO_ID</code>, <code>Supplier</code>, <code>Invoice_Amount</code>, <code>Invoice_Date</code></li>
+<li><strong>Payments</strong> — <code>Payment_ID</code>, <code>Invoice_ID</code>, <code>Payment_Amount</code>, <code>Payment_Date</code></li>
+</ul>
+<p>I deliberately seeded a few exceptions into the data: two invoices that overshoot or undershoot their PO amount, two unpaid invoices, one invoice paid short, and one invoice with no matching PO at all (an unauthorised purchase).</p>
+</section>
+<section id="step-2-the-matching-logic-in-sql" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-the-matching-logic-in-sql">Step 2: The matching logic in SQL</h2>
+<p>The core of the reconciliation is a <code>LEFT JOIN</code> from invoices out to POs and payments, with a <code>CASE</code> statement doing the exception classification:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> matched <span class="kw">AS</span> (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        i.invoice_id,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        i.supplier,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        i.po_id,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        po.po_amount,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        i.invoice_amount,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">COALESCE</span>(<span class="fu">SUM</span>(p.payment_amount), <span class="dv">0</span>) <span class="kw">AS</span> total_paid</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> invoices i</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">LEFT</span> <span class="kw">JOIN</span> purchase_orders po <span class="kw">ON</span> po.po_id <span class="op">=</span> i.po_id</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">LEFT</span> <span class="kw">JOIN</span> payments p <span class="kw">ON</span> p.invoice_id <span class="op">=</span> i.invoice_id</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> i.invoice_id</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    invoice_id, supplier, po_id, po_amount, invoice_amount, total_paid,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">CASE</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">WHEN</span> po_amount <span class="kw">IS</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="st">'No matching PO'</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">WHEN</span> <span class="fu">ABS</span>(invoice_amount <span class="op">-</span> po_amount) <span class="op">&gt;</span> <span class="fl">0.01</span> <span class="cf">THEN</span> <span class="st">'PO/Invoice amount mismatch'</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">WHEN</span> total_paid <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="st">'Unpaid'</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">WHEN</span> <span class="fu">ABS</span>(total_paid <span class="op">-</span> invoice_amount) <span class="op">&gt;</span> <span class="fl">0.01</span> <span class="cf">THEN</span> <span class="st">'Payment amount mismatch'</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">ELSE</span> <span class="st">'OK'</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="kw">AS</span> exception_type</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> matched</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> exception_type, invoice_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Running this against the mock dataset returns <strong>6 exceptions out of 17 invoices</strong>: 2 amount mismatches, 2 unpaid, 1 short payment, and 1 invoice with no PO behind it. The full dataset and query are in the repo alongside this post.</p>
+<p>I used <code>LEFT JOIN</code> rather than <code>INNER JOIN</code> deliberately: an inner join would silently drop exactly the rows I most need to see (invoices with no PO, invoices with no payment). The exceptions are the point, not the noise to filter out.</p>
+</section>
+<section id="step-3-the-same-logic-in-excel" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-the-same-logic-in-excel">Step 3: The same logic in Excel</h2>
+<p>Not every finance team has a database sitting behind their AP process, so I rebuilt the same check as a formula-driven Excel workbook, since that is still where a lot of reconciliation actually happens:</p>
+<ul>
+<li><code>INDEX</code>/<code>MATCH</code> pulls the PO amount across from the Purchase Orders sheet for each invoice</li>
+<li><code>SUMIF</code> totals payments against each invoice</li>
+<li>A nested <code>IF</code> chain classifies the exception type, in the same order as the SQL <code>CASE</code> statement</li>
+<li>Conditional formatting highlights any row that isn’t <code>OK</code></li>
+<li>A summary sheet counts exceptions by type with <code>COUNTIF</code>, giving a one-glance view for anyone who just wants the headline</li>
+</ul>
+<p>Everything in the Exceptions and Summary tabs is a live formula, not a pasted value, so the sheet re-flags automatically if the underlying data changes. The workbook is attached in the repo.</p>
+</section>
+<section id="step-4-automating-the-check" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-automating-the-check">Step 4: Automating the check</h2>
+<p>A spreadsheet that someone has to remember to open is only half a solution. The next piece is having the exception check run on its own and alert the right person.</p>
+<p>Below is the Power Automate flow I designed for this: it is not yet deployed against a live tenant (my Power Platform work so far has been self-study through Microsoft Learn and Coursera, not a production environment), but the logic maps directly onto the SQL and Excel version above, and it is one I plan to actually build out next.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A[Recurrence trigger: daily 7am] --&gt; B[List rows: Exceptions table]
+    B --&gt; C{Any rows where&lt;br/&gt;Exception_Type != OK?}
+    C -- Yes --&gt; D[Create HTML table from filtered rows]
+    D --&gt; E[Send email to AP team&lt;br/&gt;with exception summary]
+    D --&gt; F[Post summary to&lt;br/&gt;Finance-Ops Teams channel]
+    C -- No --&gt; G[Log 'no exceptions' to tracking list]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The design choices mirror what I’d actually want in production:</p>
+<ul>
+<li><strong>Recurrence trigger</strong>, not a manual run, so nobody has to remember</li>
+<li><strong>Filter before notifying</strong>, so the AP team only gets an email when there is something to act on, not a daily “all clear” that trains people to ignore it</li>
+<li><strong>Two outputs</strong> (email and Teams) because the people who need the detail and the people who just need to know “is there a problem today” are often different audiences</li>
 </ul>
 </section>
-<section id="is-the-data-clean" class="level3">
-<h3 class="anchored" data-anchor-id="is-the-data-clean">Is the data clean?</h3>
-<p>There are two combined dataset are clean and pre-prepared. These datasets were combined based on demographic categories to provide a comprehensive analysis of Valentine’s Day spending trends.</p>
+<section id="what-this-does-and-does-not-show" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-does-and-does-not-show">What this does and does not show</h2>
+<p>I want to be upfront about the scope here. The SQL and Excel pieces are fully built and tested against the dataset in this repo, results match exactly between the two approaches. The Power Automate flow is a design I can build and explain, not yet something running against live data. For a role that specifically asks for Power Platform experience, that is a real gap, and this project is my way of closing it deliberately rather than listing the tool on a resume without having built anything.</p>
+<p><strong>Next steps I’m taking:</strong> setting this exact flow up in a Microsoft 365 developer sandbox, and adding a Power BI page on top of the Summary sheet so the exception trend is visible over time, not just as a single snapshot.</p>
 </section>
-</section>
-</section>
-<section id="more-than-flowers-and-chocolates-with-todays-choices" class="level1">
-<h1>More Than Flowers and Chocolates with Today’s Choices</h1>
-<p>Recent insights of the Valentine’s Day consumer data from the National Retail Federation (NRF) reveal interesting trends in how people choose to celebrate this occasion. While traditional gifts like flowers and chocolates remain popular, there is a noticeable shift in consumer preferences. As shown in <a href="#fig-historicalspending" class="quarto-xref">Figure&nbsp;1</a>, spending on Valentine’s Day has increased from $14.1 billion in 2010 to $23.9 billion in 2022. Consumers expect to spend an average of $175.41 per person on Valentine’s Day gifts, up from $164.76 in 2021. These increases reflect changing consumer perspectives and spending behaviors, indicating that people are willing to invest more in their celebrations or in their significant others or spouses.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-historicalspending" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-historicalspending-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-historicalspending-1.png" class="img-fluid figure-img" style="width:100.0%" data-fig-pos="H">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-historicalspending-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Historical total expected and per person spending
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Interestingly, while overall spending continues to grow, the percentage of people celebrating Valentine’s Day has declined from 60% in 2010 to just 53% this year. This suggests that those who do celebrate are spending more, despite a growing segment of the population who are choosing to skip the holiday altogether.</p>
-<div class="cell">
-<div id="tbl-gifttrends" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-gifttrends-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Comparison of Historical Speding On Gifts
-</figcaption>
-<div aria-describedby="tbl-gifttrends-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
-<thead>
-<tr class="header">
-<th style="text-align: right;" data-quarto-table-cell-role="th">Year</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Candy</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Flowers</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Jewelry</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Greeting cards</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">An evening out</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Clothing</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Gift cards</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">2010</td>
-<td style="text-align: left;">47%</td>
-<td style="text-align: left;">36%</td>
-<td style="text-align: left;">15%</td>
-<td style="text-align: left;">55%</td>
-<td style="text-align: left;">36%</td>
-<td style="text-align: left;">14%</td>
-<td style="text-align: left;">11%</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2022</td>
-<td style="text-align: left;">56%</td>
-<td style="text-align: left;">37%</td>
-<td style="text-align: left;">22%</td>
-<td style="text-align: left;">40%</td>
-<td style="text-align: left;">31%</td>
-<td style="text-align: left;">22%</td>
-<td style="text-align: left;">21%</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</figure>
-</div>
-</div>
-<p>Taking a closer look at the survey data reveals some fascinating shifts in gift preferences. According to <a href="#tbl-gifttrends" class="quarto-xref">Table&nbsp;1</a>, greeting cards were the most favored gift among consumers in 2010 (56%). However, that percentage dropped to 40% in 2022, indicating a trend towards more memorable and meaningful gifts rather than expensive items. This shift highlights a rising interest in celebrating Valentine’s Day in unique ways, focusing on original experiences or handmade gifts rather than traditional pricey options.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-giftageanalysis" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-giftageanalysis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-giftageanalysis-1.png" class="img-fluid figure-img" style="width:100.0%" data-fig-pos="H">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-giftageanalysis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Average Percent Spending on Different Gifts By Age Group
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p><a href="https://www.forbes.com/sites/claraludmir/2024/02/13/valentines-day-spending-to-hit-26-billion-as-experience-gifts-grow-in-popularity/">Clara Ludmir (2024)</a>, a Forbes contributor, said that “while flowers, candy and greeting cards still top the list of main gifts, younger generations are shifting the way Valentine’s Day is being celebrated, looking beyond traditional gifts.” <a href="#fig-giftageanalysis" class="quarto-xref">Figure&nbsp;2</a> shows that younger consumers (ages 18-34) are more inclined toward purchasing candy (70%), flowers (50%), and spending on an evening out (40%), while older demographics (from ages 35 to ages 55 and above) tend to favor memorable gifts like greeting cards, candy, and flowers. It looks like the decline in greeting card sales in 2022 (<a href="#tbl-gifttrends" class="quarto-xref">Table&nbsp;1</a>) may be connected to older consumers choosing not to celebrate Valentine’s Day. For instance, only 19% of consumers aged 45-54 indicated that they would celebrate this holiday, according to a <a href="https://www.kaggle.com/datasets/infinator/happy-valentines-day-2022?select=spending_or_celebrating_age_1.csv">survey data</a> released by the NRF.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-giftgenderanalysis" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-giftgenderanalysis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-giftgenderanalysis-1.png" class="img-fluid figure-img" style="width:100.0%" data-fig-pos="H">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-giftgenderanalysis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Average Percent Spending on Different Gifts By Gender
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>The survey data reveals that both genders spending money on or celebrating Valentines Day are the same (27%). However, when it comes to the types of gifts purchased, the differences are quite interesting. As highlighted in <a href="#fig-giftgenderanalysis" class="quarto-xref">Figure&nbsp;3</a>, men are more likely to buy jewelry and expensive experiences, while women often opt for more budget-friendly options like greeting cards, candy, and clothing. Interestingly, even as younger generations change how they celebrate Valentine’s Day and move away from traditional gifts, the preference for flowers remains strong among men. In fact, 56% of men still purchase flowers, compared to only 19% of women. This indicates that flowers continue to represent a traditional mindset in gift-giving, typically given by men rather than women, regardless of age or the changes that have taken place over time. Therefore, retailers who heavily rely on Valentine’s Day sales can be confident that this aspect of consumer behavior is unlikely to change.</p>
-<p>The analysis of Valentine’s Day spending trends reveals some significant shifts in consumer preferences. These shifts represent an interesting opportunity for retailers across various categories to leverage Valentine’s Day to promote their products. While total spending has generally increased, this could be driven by both inflation and evolving preferences toward experiences over traditional gifts. It’s also important to note the decline in the percentage of people celebrating the holiday. Younger generations are stepping away from traditional gifts—especially greeting cards—favoring experiences and more personalized options instead. In contrast, older generations tend to purchase sentimental or memorable items.</p>
-<p>Gender differences and demographic factors play a crucial role in shaping spending patterns, providing valuable insights for targeted marketing strategies. Young men, in particular, emerge as key consumers, often feeling uncertain about what to buy for Valentine’s Day. This analysis highlights both the challenges and opportunities for retailers, emphasizing the importance of understanding evolving consumer preferences in order to tailor marketing strategies and product offerings effectively. As younger consumers seek more meaningful ways to celebrate love, they may prefer original and unique gifts over traditional gift categories. “This will push retailers to innovate and be creative, allowing traditional gifts like flowers and chocolates to make space for fresh alternatives like non-alcoholic spritzers and self-care beauty packages.” <a href="https://www.forbes.com/sites/claraludmir/2024/02/13/valentines-day-spending-to-hit-26-billion-as-experience-gifts-grow-in-popularity/">Clara Ludmir, a Forbes contributor</a> said. Despite the changes in how Valentine’s Day is celebrated, the holiday continues to be a significant event for consumer spending, with sales expected to grow in the coming year.</p>
+<section id="files" class="level2">
+<h2 class="anchored" data-anchor-id="files">Files</h2>
+<p>All data, the SQL script, and the Excel workbook are in the <code>data/</code> folder next to this post.</p>
 
 
 </section>

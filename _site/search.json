@@ -7,6 +7,62 @@
     "text": "I am currently a Master of Business Analytics student at Monash University. I’m dedicated to understanding and analyzing business market trends, with a keen interest in environmental data and their implications on sustainability and business decisions.\n\nMy research interests include:\n\nBusiness market trend analysis,\nEnvironmental data analytics,\nData visualization,\nPredictive modeling in business contexts,\nUnderstanding the impact of economic trends on consumer choices\n\n\nI am an advocate for the responsible use of data and believe in maintaining transparency while ensuring privacy in analytics. My active GitHub profile contains various business analytics reports that I share publicly.\nI enjoy working on business analytics assignments in this course, which align with my passion. I am keen to exploring more about how analytics works in the real world."
   },
   {
+    "objectID": "posts/automating-invoice-reconciliation/index.html",
+    "href": "posts/automating-invoice-reconciliation/index.html",
+    "title": "Automating Invoice Reconciliation: A SQL, Excel and Power Automate Approach",
+    "section": "",
+    "text": "Anyone who has processed accounts payable by hand knows the routine: check the invoice against the purchase order, check the purchase order against what was actually paid, and hope nothing slips through. When I worked accounts payable for a small supplier base, this meant manually cross-checking every invoice against roughly 10-20 suppliers’ worth of purchase orders and bank reconciliations in Excel. It worked, but it did not scale, and it relied on someone remembering to look.\nThis post walks through a small proof-of-concept for the part of that job that should be automated: a three-way match between purchase orders, invoices and payments, with exceptions flagged automatically instead of found by chance.\nThe scenario is a mock dataset (17 invoices against 15 purchase orders and 15 payments), but the logic is the same shape as real AP reconciliation work: catch amount mismatches, unpaid invoices, and invoices with no purchase order behind them at all."
+  },
+  {
+    "objectID": "posts/automating-invoice-reconciliation/index.html#the-problem",
+    "href": "posts/automating-invoice-reconciliation/index.html#the-problem",
+    "title": "Automating Invoice Reconciliation: A SQL, Excel and Power Automate Approach",
+    "section": "",
+    "text": "Anyone who has processed accounts payable by hand knows the routine: check the invoice against the purchase order, check the purchase order against what was actually paid, and hope nothing slips through. When I worked accounts payable for a small supplier base, this meant manually cross-checking every invoice against roughly 10-20 suppliers’ worth of purchase orders and bank reconciliations in Excel. It worked, but it did not scale, and it relied on someone remembering to look.\nThis post walks through a small proof-of-concept for the part of that job that should be automated: a three-way match between purchase orders, invoices and payments, with exceptions flagged automatically instead of found by chance.\nThe scenario is a mock dataset (17 invoices against 15 purchase orders and 15 payments), but the logic is the same shape as real AP reconciliation work: catch amount mismatches, unpaid invoices, and invoices with no purchase order behind them at all."
+  },
+  {
+    "objectID": "posts/automating-invoice-reconciliation/index.html#step-1-the-data",
+    "href": "posts/automating-invoice-reconciliation/index.html#step-1-the-data",
+    "title": "Automating Invoice Reconciliation: A SQL, Excel and Power Automate Approach",
+    "section": "Step 1: The data",
+    "text": "Step 1: The data\nThree tables, structured the way they would sit in a small ERP or a SharePoint list:\n\nPurchase Orders — PO_ID, Supplier, PO_Amount, PO_Date\nInvoices — Invoice_ID, PO_ID, Supplier, Invoice_Amount, Invoice_Date\nPayments — Payment_ID, Invoice_ID, Payment_Amount, Payment_Date\n\nI deliberately seeded a few exceptions into the data: two invoices that overshoot or undershoot their PO amount, two unpaid invoices, one invoice paid short, and one invoice with no matching PO at all (an unauthorised purchase)."
+  },
+  {
+    "objectID": "posts/automating-invoice-reconciliation/index.html#step-2-the-matching-logic-in-sql",
+    "href": "posts/automating-invoice-reconciliation/index.html#step-2-the-matching-logic-in-sql",
+    "title": "Automating Invoice Reconciliation: A SQL, Excel and Power Automate Approach",
+    "section": "Step 2: The matching logic in SQL",
+    "text": "Step 2: The matching logic in SQL\nThe core of the reconciliation is a LEFT JOIN from invoices out to POs and payments, with a CASE statement doing the exception classification:\nWITH matched AS (\n    SELECT\n        i.invoice_id,\n        i.supplier,\n        i.po_id,\n        po.po_amount,\n        i.invoice_amount,\n        COALESCE(SUM(p.payment_amount), 0) AS total_paid\n    FROM invoices i\n    LEFT JOIN purchase_orders po ON po.po_id = i.po_id\n    LEFT JOIN payments p ON p.invoice_id = i.invoice_id\n    GROUP BY i.invoice_id\n)\nSELECT\n    invoice_id, supplier, po_id, po_amount, invoice_amount, total_paid,\n    CASE\n        WHEN po_amount IS NULL THEN 'No matching PO'\n        WHEN ABS(invoice_amount - po_amount) &gt; 0.01 THEN 'PO/Invoice amount mismatch'\n        WHEN total_paid = 0 THEN 'Unpaid'\n        WHEN ABS(total_paid - invoice_amount) &gt; 0.01 THEN 'Payment amount mismatch'\n        ELSE 'OK'\n    END AS exception_type\nFROM matched\nORDER BY exception_type, invoice_id;\nRunning this against the mock dataset returns 6 exceptions out of 17 invoices: 2 amount mismatches, 2 unpaid, 1 short payment, and 1 invoice with no PO behind it. The full dataset and query are in the repo alongside this post.\nI used LEFT JOIN rather than INNER JOIN deliberately: an inner join would silently drop exactly the rows I most need to see (invoices with no PO, invoices with no payment). The exceptions are the point, not the noise to filter out."
+  },
+  {
+    "objectID": "posts/automating-invoice-reconciliation/index.html#step-3-the-same-logic-in-excel",
+    "href": "posts/automating-invoice-reconciliation/index.html#step-3-the-same-logic-in-excel",
+    "title": "Automating Invoice Reconciliation: A SQL, Excel and Power Automate Approach",
+    "section": "Step 3: The same logic in Excel",
+    "text": "Step 3: The same logic in Excel\nNot every finance team has a database sitting behind their AP process, so I rebuilt the same check as a formula-driven Excel workbook, since that is still where a lot of reconciliation actually happens:\n\nINDEX/MATCH pulls the PO amount across from the Purchase Orders sheet for each invoice\nSUMIF totals payments against each invoice\nA nested IF chain classifies the exception type, in the same order as the SQL CASE statement\nConditional formatting highlights any row that isn’t OK\nA summary sheet counts exceptions by type with COUNTIF, giving a one-glance view for anyone who just wants the headline\n\nEverything in the Exceptions and Summary tabs is a live formula, not a pasted value, so the sheet re-flags automatically if the underlying data changes. The workbook is attached in the repo."
+  },
+  {
+    "objectID": "posts/automating-invoice-reconciliation/index.html#step-4-automating-the-check",
+    "href": "posts/automating-invoice-reconciliation/index.html#step-4-automating-the-check",
+    "title": "Automating Invoice Reconciliation: A SQL, Excel and Power Automate Approach",
+    "section": "Step 4: Automating the check",
+    "text": "Step 4: Automating the check\nA spreadsheet that someone has to remember to open is only half a solution. The next piece is having the exception check run on its own and alert the right person.\nBelow is the Power Automate flow I designed for this: it is not yet deployed against a live tenant (my Power Platform work so far has been self-study through Microsoft Learn and Coursera, not a production environment), but the logic maps directly onto the SQL and Excel version above, and it is one I plan to actually build out next.\n\n\n\n\n\nflowchart TD\n    A[Recurrence trigger: daily 7am] --&gt; B[List rows: Exceptions table]\n    B --&gt; C{Any rows where&lt;br/&gt;Exception_Type != OK?}\n    C -- Yes --&gt; D[Create HTML table from filtered rows]\n    D --&gt; E[Send email to AP team&lt;br/&gt;with exception summary]\n    D --&gt; F[Post summary to&lt;br/&gt;Finance-Ops Teams channel]\n    C -- No --&gt; G[Log 'no exceptions' to tracking list]\n\n\n\n\n\n\nThe design choices mirror what I’d actually want in production:\n\nRecurrence trigger, not a manual run, so nobody has to remember\nFilter before notifying, so the AP team only gets an email when there is something to act on, not a daily “all clear” that trains people to ignore it\nTwo outputs (email and Teams) because the people who need the detail and the people who just need to know “is there a problem today” are often different audiences"
+  },
+  {
+    "objectID": "posts/automating-invoice-reconciliation/index.html#what-this-does-and-does-not-show",
+    "href": "posts/automating-invoice-reconciliation/index.html#what-this-does-and-does-not-show",
+    "title": "Automating Invoice Reconciliation: A SQL, Excel and Power Automate Approach",
+    "section": "What this does and does not show",
+    "text": "What this does and does not show\nI want to be upfront about the scope here. The SQL and Excel pieces are fully built and tested against the dataset in this repo, results match exactly between the two approaches. The Power Automate flow is a design I can build and explain, not yet something running against live data. For a role that specifically asks for Power Platform experience, that is a real gap, and this project is my way of closing it deliberately rather than listing the tool on a resume without having built anything.\nNext steps I’m taking: setting this exact flow up in a Microsoft 365 developer sandbox, and adding a Power BI page on top of the Summary sheet so the exception trend is visible over time, not just as a single snapshot."
+  },
+  {
+    "objectID": "posts/automating-invoice-reconciliation/index.html#files",
+    "href": "posts/automating-invoice-reconciliation/index.html#files",
+    "title": "Automating Invoice Reconciliation: A SQL, Excel and Power Automate Approach",
+    "section": "Files",
+    "text": "Files\nAll data, the SQL script, and the Excel workbook are in the data/ folder next to this post."
+  },
+  {
     "objectID": "posts/welcome/index.html#how-do-we-get-the-data",
     "href": "posts/welcome/index.html#how-do-we-get-the-data",
     "title": "Valentine’s Day Consumer Spending Trends",
@@ -18,6 +74,6 @@
     "href": "index.html",
     "title": "Blog",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nValentine’s Day Consumer Spending Trends\n\n\n\n\n\n\nnews\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nOct 3, 2024\n\n\nMin Ni Hong\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nAutomating Invoice Reconciliation: A SQL, Excel and Power Automate Approach\n\n\n\nSQL\n\nExcel\n\nPower Automate\n\nFinance Automation\n\n\n\nDesigning a three-way match to catch invoice exceptions before they become payment errors, and automating the alert.\n\n\n\n\n\nSep 22, 2026\n\n\nMin Ni Hong\n\n\n\n\n\n\n\n\n\n\n\n\nValentine’s Day Consumer Spending Trends\n\n\n\nnews\n\nanalysis\n\n\n\n\n\n\n\n\n\nOct 3, 2024\n\n\nMin Ni Hong\n\n\n\n\n\nNo matching items"
   }
 ]
